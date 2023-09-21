@@ -1577,7 +1577,7 @@ Transform:
   m_GameObject: {fileID: 1774946728}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 65.61, y: 0.75, z: -11.77}
+  m_LocalPosition: {x: 70.34, y: 0.75, z: -16.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1599,6 +1599,7 @@ GameObject:
   - component: {fileID: 1799667060}
   - component: {fileID: 1799667062}
   - component: {fileID: 1799667063}
+  - component: {fileID: 1799667064}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -1772,6 +1773,45 @@ MonoBehaviour:
   isMoving: 0
   followRadius: 20.6
   followDuration: 10
+--- !u!114 &1799667064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799667055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f87f9a85492694f9c768032ee632da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveType: 3
+  animCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  height: 2
+  duration: 0.5
 --- !u!1 &1871847840
 GameObject:
   m_ObjectHideFlags: 0
