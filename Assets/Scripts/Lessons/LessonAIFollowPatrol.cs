@@ -20,10 +20,10 @@ public class LessonAIFollowPatrol : MonoBehaviour {
     void Start() {
         agent = GetComponent<NavMeshAgent>();     
         
-        foreach (Transform t in targetWaypoint.GetComponentInChildren<Transform>()) { 
-            if(t == targetWaypoint) continue;
-            waypoints.Add(t);
-        }
+        //foreach (Transform t in targetWaypoint.GetComponentInChildren<Transform>()) { 
+        //    if(t == targetWaypoint) continue;
+        //    waypoints.Add(t);
+        //}
         MoveToRandomWaypoint();
     }
 
@@ -55,6 +55,9 @@ public class LessonAIFollowPatrol : MonoBehaviour {
                 }
                 break;
         }
+
+        if (gameObject.layer != LayerMask.NameToLayer("Wall")) return;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y);
     }
 
     private void MoveToRandomWaypoint() {

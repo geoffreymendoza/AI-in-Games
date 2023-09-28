@@ -30,6 +30,9 @@ public class LessonOfflinkCurve : MonoBehaviour {
                     case OfflinkMoveType.Curve:
                         yield return StartCoroutine(Curve(agent, duration));
                         break;
+                    case OfflinkMoveType.Climb:
+                        yield return StartCoroutine(Climb(agent));
+                        break;
                 }
                 agent.CompleteOffMeshLink();
             }
@@ -43,6 +46,19 @@ public class LessonOfflinkCurve : MonoBehaviour {
         Vector3 endPos = linkData.endPos + Vector3.up * agent.baseOffset;
         while (agent.transform.position != endPos) {
             agent.transform.position = Vector3.MoveTowards(agent.transform.position, endPos, agent.speed * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    private IEnumerator Climb(NavMeshAgent agent) { 
+        OffMeshLinkData data = agent.currentOffMeshLinkData; ;
+        Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+        Vector3 targetDir = endPos - agent.transform.position;
+        float angle = Mathf.Atan2(targetDir.y, targetDir.z);
+        while (agent.transform.position != endPos) {
+            Vector3 targetPos = Vector3.MoveTowards(agent.transform.position, endPos, agent.speed * Time.deltaTime);
+            Quaternion targetRot = Quaternion.Euler(0, angle, 0);
+            agent.transform.SetPositionAndRotation(targetPos, targetRot);
             yield return null;
         }
     }
@@ -83,4 +99,5 @@ public enum OfflinkMoveType {
     Teleport,
     Parabola,
     Curve,
+    Climb,
 }
