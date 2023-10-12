@@ -1022,7 +1022,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1782702501690864755}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 164890c6289b776489b94311736e7ff7, type: 3}
+  m_Avatar: {fileID: 9000000, guid: c346a9e2503cda64ba4698db6aa5e707, type: 3}
   m_Controller: {fileID: 9100000, guid: 4c7fe8e1a3919c549a79a706afefd1ce, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -1035,7 +1035,7 @@ Animator:
     'RingFinger1_R'\n\tTransform 'PinkyFinger1_R'\n\tTransform 'Wrist_L'\n\tTransform
     'ThumbFinger3_L'\n\tTransform 'PinkyFinger2_R'\n\tTransform 'ThumbFinger2_L'\n\tTransform
     'Ankle_L'\n\tTransform 'RingFinger3_R'\n\tand more ...\n\tFrom animation clip
-    'Walking'\n\tFrom animation clip 'Running'"
+    'Running'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
