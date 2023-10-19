@@ -5302,6 +5302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7099754294309597351}
   - component: {fileID: 8498664602496941653}
+  - component: {fileID: 5216342001379280739}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -5348,6 +5349,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5216342001379280739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7878768773980132349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680831321216a734ebd2c5930b243c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7924215042266617037
 GameObject:
   m_ObjectHideFlags: 0
@@ -5825,7 +5838,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -5871,6 +5884,7 @@ MonoBehaviour:
   aiState: 1
   playerTr: {fileID: 0}
   agent: {fileID: 0}
+  animator: {fileID: 8498664602496941653}
   targetWaypoint: {fileID: 0}
   waypoints: []
   waypointNumber: 0
@@ -5879,6 +5893,8 @@ MonoBehaviour:
   chaseDuration: 3
   chaseDurationReset: 3
   distanceToPlayer: 0
+  slashVFX: {fileID: 6445826192643391251, guid: 78e50a02e17938a4baf517253d545621,
+    type: 3}
 --- !u!1 &8828397574651683838
 GameObject:
   m_ObjectHideFlags: 0

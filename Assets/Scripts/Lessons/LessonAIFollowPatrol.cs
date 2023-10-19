@@ -9,6 +9,7 @@ public class LessonAIFollowPatrol : MonoBehaviour {
     public AIState aiState;
     public Transform playerTr;
     public NavMeshAgent agent;
+    public Animator animator;
     public Transform targetWaypoint;
     public List<Transform> waypoints = new List<Transform>();
     public int waypointNumber;
@@ -17,6 +18,8 @@ public class LessonAIFollowPatrol : MonoBehaviour {
     public float chaseDuration;
     public float chaseDurationReset;
     public float distanceToPlayer;
+    public GameObject slashVFX;
+    public bool isAttacking;
 
     // Start is called before the first frame update
     void Start() {
@@ -61,6 +64,21 @@ public class LessonAIFollowPatrol : MonoBehaviour {
 
         if (gameObject.layer != LayerMask.NameToLayer("Wall")) return;
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y);
+
+        if(animator != null){
+            
+        }
+
+        if( isAttacking){
+            Vector3 dirToTarget = agent.transform.position - this.transform.position;
+            Quaternion lookRot = Quaternion.LookRotation(dirToTarget);
+            transform.rotation = Quaternion.Euler(0, lookRot.eulerAngles.y, 0);
+        }
+    }
+
+    private AnimationClip GetCurrentAnimator(Animator anim, int layer){
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(layer);
+        return anim.GetCurrentAnimatorClipInfo(layer)[0].clip;
     }
 
     public void MoveToRandomWaypoint() {
@@ -81,6 +99,11 @@ public class LessonAIFollowPatrol : MonoBehaviour {
     }
 
     private int GetRandomWayPointIndex() => UnityEngine.Random.Range(0, waypoints.Count);
+
+    public void MeleeVFX()
+    {
+        var clone = Instantiate(slashVFX, this.transform.position + Vector3.up, this.transform.rotation);
+    }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;

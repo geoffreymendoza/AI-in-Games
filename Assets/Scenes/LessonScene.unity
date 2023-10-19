@@ -2127,6 +2127,7 @@ MonoBehaviour:
   aiState: 1
   playerTr: {fileID: 1774946732}
   agent: {fileID: 0}
+  animator: {fileID: 0}
   targetWaypoint: {fileID: 267266355}
   waypoints:
   - {fileID: 439800481}
@@ -2137,6 +2138,7 @@ MonoBehaviour:
   chaseDuration: 0
   chaseDurationReset: 0
   distanceToPlayer: 0
+  slashVFX: {fileID: 0}
 --- !u!114 &1799667064
 MonoBehaviour:
   m_ObjectHideFlags: 0
