@@ -13,6 +13,7 @@ public class Agent : MonoBehaviour {
 
     private void Awake() {
         _agent = GetComponent<NavMeshAgent>();
+        
     }
 
     // Start is called before the first frame update
