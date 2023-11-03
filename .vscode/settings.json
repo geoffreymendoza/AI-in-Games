@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "AI-in-Games.sln"
+    "dotnet.defaultSolution": "AI Lessons.sln"
 }
