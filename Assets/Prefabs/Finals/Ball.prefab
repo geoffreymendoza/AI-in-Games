@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1693186921095933786}
   - component: {fileID: 1367843119978121784}
   - component: {fileID: 8019941162268045036}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,3 +179,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1367843119978121784}
+  canTouchAgent: 0

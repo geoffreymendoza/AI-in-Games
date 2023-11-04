@@ -13,17 +13,17 @@ public class EntityManager : MonoBehaviour {
     [SerializeField] private Vector3 redTeamLoc;
     [SerializeField] private Vector3 greenTeamLoc;
 
-    private static List<IEntityHandler> _entities = new List<IEntityHandler>();
+    private static List<CubeChanController> _entities = new List<CubeChanController>();
 
     private void Start() {
         SetEntities();
     }
 
-    public static void Register(IEntityHandler handler) {
+    public static void Register(CubeChanController controller) {
         if(_entities == null)
-            _entities = new List<IEntityHandler>();
-        if (_entities.Contains(handler)) return;
-        _entities.Add(handler);
+            _entities = new List<CubeChanController>();
+        if (_entities.Contains(controller)) return;
+        _entities.Add(controller);
     }
     
     private void SetEntities() {

@@ -1778,7 +1778,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1831,7 +1831,14 @@ MonoBehaviour:
   throwAnimationHelper: {fileID: 6548822122394352112}
   throwForceMinMax: {x: 10, y: 60}
   ballClone: {fileID: 26657213261640470}
+  ballMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  detectBallRange: 7
   team: 0
+  IdleState:
+    StateName: Idle
+    resetIdleDuration: 2
 --- !u!1 &4627931689135209258
 GameObject:
   m_ObjectHideFlags: 0
