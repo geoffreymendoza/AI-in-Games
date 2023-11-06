@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace CubeChan {
 public class EntityManager : MonoBehaviour {
+    public static EntityManager Instance { private set; get; }
+    
     [Header("References")]
     [SerializeField] private Material teamRedMat;
     [SerializeField] private Material teamGreenMat;
@@ -13,17 +16,22 @@ public class EntityManager : MonoBehaviour {
     [SerializeField] private Vector3 redTeamLoc;
     [SerializeField] private Vector3 greenTeamLoc;
 
-    private static List<CubeChanController> _entities = new List<CubeChanController>();
+    private List<CubeChanController> _entities = new List<CubeChanController>();
+    public CubeChanController[ ] GetEntities() => _entities.ToArray();
 
-    private void Start() {
-        SetEntities();
+    private void Awake() {
+        Instance = this;
+        _entities = new List<CubeChanController>();
     }
 
-    public static void Register(CubeChanController controller) {
-        if(_entities == null)
-            _entities = new List<CubeChanController>();
+    private void OnDestroy() {
+        Instance = null;
+    }
+
+    public void Register(CubeChanController controller) {
         if (_entities.Contains(controller)) return;
         _entities.Add(controller);
+        SetEntities();
     }
     
     private void SetEntities() {
@@ -43,6 +51,15 @@ public class EntityManager : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public Vector3 GetRandomEnemyPosition(Team currentTeam) {
+        Vector3 resultPos = Vector3.zero;
+        foreach (CubeChanController cube in _entities.Where(cube => cube.isActiveAndEnabled && cube.IsAlive && cube.Team != currentTeam)) {
+            resultPos = cube.transform.position;
+            break;
+        }
+        return resultPos;
     }
 
     private void OnDrawGizmosSelected() {

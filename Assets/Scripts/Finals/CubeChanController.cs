@@ -1,8 +1,8 @@
 using System.Collections;
 using CubeChan.Cube_chan;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace CubeChan {
@@ -34,16 +34,17 @@ public class CubeChanController : MonoBehaviour, IEntityHandler {
     private Animator _anim;
     private Ball _ball;
 
+    private bool _isChangingState = false;
     public Vector3 CurrentPosition => this.transform.position;
+    public bool IsAlive => Hp > 0;
     
     private void Awake() {
         AssignComponents();
-        EntityManager.Register(this);
     }
 
     private void Start() {
-        _currentState = IdleState;
-        _currentState.EnterState(this);
+        EntityManager.Instance.Register(this);
+        ChangeState(IdleState);
     }
 
     private void OnEnable() {
@@ -60,7 +61,8 @@ public class CubeChanController : MonoBehaviour, IEntityHandler {
     }
 
     private void Update() {
-        _currentState.UpdateState(this);
+        if(!_isChangingState)
+            _currentState.UpdateState(this);
         _anim.SetFloat(Data.NAVIGATION_ANIMATION, _agent.velocity.magnitude);
         Debug.Log(_currentState.StateName);
     }
@@ -70,36 +72,50 @@ public class CubeChanController : MonoBehaviour, IEntityHandler {
         _agent = GetComponentInChildren<NavMeshAgent>();
         _anim = GetComponentInChildren<Animator>();
         throwAnimationHelper.Init(ThrowBall);
+        IdleState = new CubeIdleState();
+        PickupState = new CubePickupState();
+        PatrolState = new CubePatrolState();
     }
 
     public void ReadyToThrow() {
-        GameManager.Instance.InvokePlay();
+        // Face towards first before changing to animation
+        Vector3 enemyPos = EntityManager.Instance.GetRandomEnemyPosition(Team);
+        // Vector3 direction = ( GameManager.Instance.CenterLine - this.transform.position ).normalized;
+        Vector3 position = enemyPos - this.transform.position;
+        transform.DOLookAt(position, 0.4f);
+        
+        Invoke(nameof(BallSwitch), 1.15f);
+        ChangeAnim(Data.PICKUP_ANIMATION);
+    }
+
+    private void BallSwitch() {
         ballClone.SetActive(true);
         _ball.ResetBall();
         _ball.transform.SetParent(palmTr, true);
         _ball.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         _ball.transform.gameObject.SetActive(false);
-        ChangeAnim(Data.PICKUP_ANIMATION);
     }
 
     private void ThrowBall() {
+        GameManager.Instance.InvokePlay(Team);
         ballClone.SetActive(false);
         _ball.transform.gameObject.SetActive(true);
         _ball.transform.SetParent(null);
         float throwForce = Random.Range(throwForceMinMax.x, throwForceMinMax.y);
-        _ball.Throw(this.transform.forward, throwForce);
+        
+        Vector3 position = EntityManager.Instance.GetRandomEnemyPosition(Team);
+        Vector3 direction = ( position - this.transform.position ).normalized;
+        _ball.Throw(direction, throwForce);
         _ball = null;
         ChangeState(PatrolState);
     }
 
     #region Outside Calls
 
-    public void DetectBall() {
-        var cols = Physics.OverlapSphere(this.transform.position, detectBallRange, ballMask);
-        if (cols.Length > 0) {
-            _ball = cols[0].GetComponent<Ball>();
-            ChangeState(PickupState);
-        }
+    public void PickupBall(Ball ball) {
+        _ball = ball;
+        Debug.Log("Picking up ball");
+        ChangeState(PickupState);
     }
 
     public void ChangeAnim(int state) {
@@ -107,12 +123,15 @@ public class CubeChanController : MonoBehaviour, IEntityHandler {
     }
 
     public void Navigate(Vector3 position) {
-        _agent.SetDestination(position);
+        if(_agent.isActiveAndEnabled)
+            _agent.SetDestination(position);
     }
 
     public void ChangeState(BaseState<CubeChanController> state) {
+        _isChangingState = true;
         _currentState = state;
-        _currentState.EnterState(this);
+        state.EnterState(this);
+        _isChangingState = false;
     }
 
     #endregion
@@ -128,23 +147,19 @@ public class CubeChanController : MonoBehaviour, IEntityHandler {
     public void ApplyHit() {
         if (Hp <= 0) return;
         Hp -= 1;
-        if (Hp <= 0) {
-            // Cannot play anymore
-            ChangeAnim(Data.DEATH_ANIMATION);
-            _agent.enabled = false;
-            _col.enabled = false;
-        }
+        if (Hp > 0) return;
+        // Cannot play anymore
+        ChangeAnim(Data.DEATH_ANIMATION);
+        _agent.enabled = false;
+        _col.enabled = false;
+        this.enabled = false;
     }
-
-    // private IEnumerator Disappear_Co {
-    //     
-    // }
 
     public void SetTeam(Team team) {
         this.team = team;
         switch (this.team) {
             case Team.Red:
-                this.transform.Rotate(Vector3.up * 180f, Space.World);
+                this.transform.Rotate(transform.up * 180f, Space.World);
                 break;
             case Team.Green:
                 break;
@@ -154,8 +169,8 @@ public class CubeChanController : MonoBehaviour, IEntityHandler {
     #endregion
 
     private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(this.transform.position, detectBallRange);
+        // Gizmos.color = Color.yellow;
+        // Gizmos.DrawWireSphere(this.transform.position, detectBallRange);
     }
 }
 }

@@ -18,8 +18,12 @@ public class Ball : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision other) {
+        GameManager.Instance.ChangeState(GameState.Throwing);
+        Debug.Log(other.gameObject.name);
+        
         if (other.gameObject.CompareTag("Object")) {
-            canTouchAgent = false;
+            // canTouchAgent = false;
+            ResetBall();
         }
         if (!canTouchAgent) return;
         if (other.gameObject.CompareTag("Agent")) {

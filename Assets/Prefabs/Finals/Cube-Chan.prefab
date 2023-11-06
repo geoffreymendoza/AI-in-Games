@@ -1809,10 +1809,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5149269
+  m_Radius: 0.6360213
   m_Height: 4.474575
   m_Direction: 1
-  m_Center: {x: 0.044914067, y: 2.2332811, z: 0.08520126}
+  m_Center: {x: 0.08160925, y: 2.2332811, z: 0.096209824}
 --- !u!114 &3736911776251674345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1829,7 +1829,7 @@ MonoBehaviour:
   shirtRenderer: {fileID: 3234142899460453721}
   palmTr: {fileID: 7830198505624837145}
   throwAnimationHelper: {fileID: 6548822122394352112}
-  throwForceMinMax: {x: 10, y: 60}
+  throwForceMinMax: {x: 30, y: 55}
   ballClone: {fileID: 26657213261640470}
   ballMask:
     serializedVersion: 2
@@ -1839,6 +1839,11 @@ MonoBehaviour:
   IdleState:
     StateName: Idle
     resetIdleDuration: 2
+    idleDuration: 2
+  PatrolState:
+    StateName: Patrol
+  PickupState:
+    StateName: Pickup
 --- !u!1 &4627931689135209258
 GameObject:
   m_ObjectHideFlags: 0
