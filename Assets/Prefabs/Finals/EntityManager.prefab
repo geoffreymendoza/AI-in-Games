@@ -49,6 +49,6 @@ MonoBehaviour:
   agentMask:
     serializedVersion: 2
     m_Bits: 256
-  detectRadius: 25
-  redTeamLoc: {x: 0, y: 0, z: 52.4}
-  greenTeamLoc: {x: 0, y: 0, z: 2.66}
+  detectRadius: 13
+  redTeamLoc: {x: 0, y: 0, z: 38}
+  greenTeamLoc: {x: 0, y: 0, z: 13}
